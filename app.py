@@ -9,13 +9,13 @@ from utility import derivative, PM, ISSC, ITTC, plot_function, plot_function_der
 omega = np.linspace(0,2,200)
 #########################################
 
-st.title('Spectrum')
+st.title('Ocean-Wave Spectrum')
 
-spectrum = st.selectbox('Choose an activation function', ['None', 'PM', 'ISSC', 'ITTC'])
+spectrum = st.selectbox('Choose a spectrum', ['None', 'P-M (Pierson-Moskowitz)', 'ISSC', 'ITTC', 'JONSWAP', 'Bretschneider'])
 
 ## PM
-if spectrum == 'PM':
-    st.header('Logistic (Sigmoid) Function')
+if spectrum == 'P-M (Pierson-Moskowitz)':
+    st.header('P-M (Pierson-Moskowitz) Spectrum')
 
     st.subheader('Description')
     st.write('It is a sigmoid function with a characteristic "S"-shaped curve.')
@@ -23,7 +23,7 @@ if spectrum == 'PM':
     st.write('The output of the logistic (sigmoid) function is always between 0 and 1.')   
 
     st.subheader('Plot')
-    PM_fig  = plot_function(PM, title='Logistic (Sigmoid) Activation Function')
+    PM_fig  = plot_function(PM, title='P-M Spectrum')
     st.plotly_chart(PM_fig)
     with st.expander('Plot Explanation'):
         st.write('- The logistic function saturates as the inputs become larger (either positive or negative).')
@@ -33,7 +33,7 @@ if spectrum == 'PM':
     st.subheader('Derivative')
     st.markdown(r'$sigmoid^{\prime}(z)=sigmoid(z)(1−sigmoid(z))$')
     st.text("")
-    PM_der_fig = plot_function_derivative(PM, title='Derivative of the Logistic Function')
+    PM_der_fig = plot_function_derivative(PM, title='Derivative of the P-M Spectrum')
     st.plotly_chart(PM_der_fig)
     with st.expander('Plot Explanation'):
         st.write('Notice that the derivative of the logistic function gets very close to zero for large positive and negative inputs.')
