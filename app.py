@@ -58,8 +58,8 @@ if spectrum == 'JONSWAP(by wind)':
     st.subheader('Formula')
 
     st.subheader('Plot')
-    U = st.slider('Wind Speed', 0.1, 15., 7.5, 0.1)
-    X = st.slider('Fetch', 0.1, 15., 7.5, 0.1)
+    U = st.slider('Wind Speed', 0.1, 50., 25., 0.1)
+    X = st.slider('Fetch', 0.1, 200., 100., 0.1)
     JONSWAP_wind_fig = plot_function(JONSWAP_wind, U=U, X=X, title='JONSWAP(by wind)')
     st.plotly_chart(JONSWAP_wind_fig)
 
