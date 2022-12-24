@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
-from utility import derivative, PM, ISSC, ITTC, plot_function, plot_function_derivative
+from utility import derivative, PM, ISSC, ITTC, JONSWAP_wind, JONSWAP_wave, Bretschneider_Mitsuyasu, plot_function, plot_function_derivative
 
 ########################################
 # Utility Code
@@ -11,7 +11,7 @@ omega = np.linspace(0,2,200)
 
 st.title('Ocean Wave Spectra')
 
-spectrum = st.sidebar.selectbox('Choose a spectrum', ['None', 'P-M (Pierson-Moskowitz)', 'ISSC', 'ITTC', 'JONSWAP', 'Bretschneider', 'Ochi-Hubble'])
+spectrum = st.sidebar.selectbox('Choose a spectrum', ['None', 'P-M (Pierson-Moskowitz)', 'ISSC', 'ITTC', 'JONSWAP(by wind)', 'JONSWAP(by wave)', 'Bretschneider-Mitsuyasu', 'Ochi-Hubble'])
 
 # None
 if spectrum == 'None':
@@ -51,3 +51,25 @@ if spectrum == 'ITTC':
     Hs = st.slider('Significant Wave Height', 0., 15., 7.5, 0.1)
     ITTC_fig = plot_function(ITTC, Hs=Hs, title = 'ITTC')
     st.plotly_chart(ITTC_fig)
+
+if spectrum == 'JONSWAP(by wind)':
+    st.header('JONSWAP(by wind)')
+
+    st.subheader('Formula')
+
+    st.subheader('Plot')
+    U = st.slider('Wind Speed', 0., 15., 7.5, 0.1)
+    X = st.slider('Fetch', 0., 15., 7.5, 0.1)
+    JONSWAP_wind_fig = plot_function(JONSWAP_wind, U=U, X=X, title='JONSWAP(by wind)')
+    st.plotly_chart(JONSWAP_wind_fig)
+
+if spectrum == 'JONSWAP(by wave)':
+    st.header('JONSWAP(by wave)')
+
+    st.subheader('Formula')
+
+    st.subheader('Plot')
+    Hs = st.slider('Significant Wave Height', 0., 15., 7.5, 0.1)
+    Ts = st.slider('Significant Wave Period', 0., 15., 7.5, 0.1)
+    JONSWAP_wave_fig = plot_function(JONSWAP_wave, Hs=Hs, Ts=Ts, title='JONSWAP(by wave)')
+    st.plotly_chart(JONSWAP_wave_fig)
