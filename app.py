@@ -38,8 +38,8 @@ if spectrum == 'ISSC':
     st.subheader('Formula')
 
     st.subheader('Plot')
-    Hv = st.slider('Visually Observed Significant Wave Height', 0., 15., 7.5, 0.1)
-    Tv = st.slider('Visually Observed Wave Period', 0., 15., 7.5, 0.1)
+    Hv = st.slider('Visually Observed Significant Wave Height', 0.1, 15., 7.5, 0.1)
+    Tv = st.slider('Visually Observed Wave Period', 0.1, 15., 7.5, 0.1)
     ISSC_fig = plot_function(ISSC, Hv=Hv, Tv=Tv, title='Hyperbolic Tangent Function')
     st.plotly_chart(ISSC_fig)
 
@@ -48,7 +48,7 @@ if spectrum == 'ITTC':
     st.header('ITTC')
 
     st.subheader('Plot')
-    Hs = st.slider('Significant Wave Height', 0., 15., 7.5, 0.1)
+    Hs = st.slider('Significant Wave Height', 0.1, 15., 7.5, 0.1)
     ITTC_fig = plot_function(ITTC, Hs=Hs, title = 'ITTC')
     st.plotly_chart(ITTC_fig)
 
@@ -58,8 +58,8 @@ if spectrum == 'JONSWAP(by wind)':
     st.subheader('Formula')
 
     st.subheader('Plot')
-    U = st.slider('Wind Speed', 0., 15., 7.5, 0.1)
-    X = st.slider('Fetch', 0., 15., 7.5, 0.1)
+    U = st.slider('Wind Speed', 0.1, 15., 7.5, 0.1)
+    X = st.slider('Fetch', 0.1, 15., 7.5, 0.1)
     JONSWAP_wind_fig = plot_function(JONSWAP_wind, U=U, X=X, title='JONSWAP(by wind)')
     st.plotly_chart(JONSWAP_wind_fig)
 
@@ -69,7 +69,18 @@ if spectrum == 'JONSWAP(by wave)':
     st.subheader('Formula')
 
     st.subheader('Plot')
-    Hs = st.slider('Significant Wave Height', 0., 15., 7.5, 0.1)
-    Ts = st.slider('Significant Wave Period', 0., 15., 7.5, 0.1)
+    Hs = st.slider('Significant Wave Height', 0.1, 15., 7.5, 0.1)
+    Ts = st.slider('Significant Wave Period', 0.1, 15., 7.5, 0.1)
     JONSWAP_wave_fig = plot_function(JONSWAP_wave, Hs=Hs, Ts=Ts, title='JONSWAP(by wave)')
     st.plotly_chart(JONSWAP_wave_fig)
+
+if spectrum == 'Bretschneider-Mitsuyasu':
+    st.header('Bretschneider-Mitsuyasu')
+
+    st.subheader('Formula')
+
+    st.subheader('Plot')
+    Hs = st.slider('Significant Wave Height', 0.1, 15., 7.5, 0.1)
+    Ts = st.slider('Significant Wave Period', 0.1, 15., 7.5, 0.1)
+    Bretschneider_Mitsuyasu_fig = plot_function(Bretschneider_Mitsuyasu, Hs=Hs, Ts=Ts, title='Bretschneider-Mitsuyasu')
+    st.plotly_chart(Bretschneider_Mitsuyasu_fig)
