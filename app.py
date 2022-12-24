@@ -6,7 +6,7 @@ from utility import derivative, PM, ISSC, ITTC, JONSWAP_wind, JONSWAP_wave, Bret
 
 ########################################
 # Utility Code
-omega = np.linspace(0,2,200)
+omega = np.linspace(0,20,4000)
 #########################################
 
 st.title('Ocean Wave Spectra')
