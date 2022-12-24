@@ -21,12 +21,11 @@ def JONSWAP_wind(omega, U, X, gamma=3.3):
     X_tilde = X*g/U**2
     alpha = 0.066*X_tilde**(-0.22)
     omega_m = 2*np.pi*3.5*g*X_tilde**(-0.32)/U
+    
     if omega[omega <= omega_m]:
-        sigma = 0.07
+        sigma = omega
+        sigma = np.where(sigma <= omega_m, 0.07, 0.09)
         return alpha * g**2/((2*np.pi)**5 * (omega/(2*np.pi))**5) * np.exp(-5/4*(omega/omega_m)**(-4)) * gamma**np.exp(-(omega-omega_m)**2/(2*sigma**2*omega_m**2))
-    else:
-        sigma = 0.09
-        return alpha * g**2/((2*np.pi)**5 * (omega/(2*np.pi))**5) * np.exp(-5/4*(omega/omega_m)**(-4)) * gamma**np.exp(-(omega-omega_m)**2/(2*sigma**2*omega_m**2)) 
 
 def JONSWAP_wave(omega, Hs, Ts, gamma=3.3, alpha=0.0326):
     Tp = 1.05*Ts
