@@ -37,9 +37,10 @@ def JONSWAP_wave(omega, Hs, Ts, gamma=3.3, alpha=0.0326):
     return alpha * Hs**2/(Tp**4 * (omega/(2*np.pi))**5) * np.exp(-5/4*(Tp * omega/(2*np.pi))**(-4)) * gamma**np.exp(-(Tp*omega/(2*np.pi)-1)**2/(2*sigma**2))
 
 def Bretschneider_Mitsuyasu(omega, Hs, Ts):
-    H_bar = 0.625*Hs
-    T_bar = Ts/1.1
-    return 0.432/(2*np.pi) * (H_bar/(g*T_bar**2))**2 * g**2 * (omega/(2*np.pi))**5 * np.exp(-0.675/(T_bar*omega/(2*np.pi))**4)
+    #H_bar = 0.625*Hs
+    #T_bar = Ts/1.1
+    #return 0.432/(2*np.pi) * (H_bar/(g*T_bar**2))**2 * g**2 * (omega/(2*np.pi))**5 * np.exp(-0.675/(T_bar*omega/(2*np.pi))**4)
+    return 0.257 * Hs**2 *Ts**(-4) * omega**(-5) * np.exp(-1.03*(Ts*omega)**(-4))
 
 def plot_function(func, title, Hv=None, Tv=None, Hs=None, Ts=None, U=None, X=None):
     fig = go.Figure()
