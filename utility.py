@@ -38,31 +38,31 @@ def Bretschneider_Mitsuyasu(omega, Hs, Ts):
     #return 0.432/(2*np.pi) * (H_bar/(g*T_bar**2))**2 * g**2 * (omega/(2*np.pi))**5 * np.exp(-0.675/(T_bar*omega/(2*np.pi))**4)
     return 0.257 * Hs**2 *Ts**(-4) * omega**(-5) * np.exp(-1.03*(Ts*omega)**(-4))
 
-def plot_function(func, title, Hv=None, Tv=None, Hs=None, Ts=None, U=None, X=None):
+def plot_function(func, Hv=None, Tv=None, Hs=None, Ts=None, U=None, X=None):
     fig = go.Figure()
     if func == PM:
-        fig.add_trace(go.Scatter(x=omega, y=func(omega), mode='lines', line=dict(color='navy', width=2)))
+        fig.add_trace(go.Scatter(x=omega, y=func(omega), mode='lines', line=dict(color='#008b8b', width=2)))
     elif func == ISSC:
-        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hv, Tv), mode='lines', line=dict(color='navy', width=2)))
+        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hv, Tv), mode='lines', line=dict(color='#008b8b', width=2)))
     elif func == ITTC:
-        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs), mode='lines', line=dict(color='navy', width=2)))
+        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs), mode='lines', line=dict(color='#008b8b', width=2)))
     elif func == JONSWAP_wind:
-        fig.add_trace(go.Scatter(x=omega, y=func(omega, U, X), mode='lines', line=dict(color='navy', width=2)))
+        fig.add_trace(go.Scatter(x=omega, y=func(omega, U, X), mode='lines', line=dict(color='#008b8b', width=2)))
     elif func == JONSWAP_wave:
-        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs, Ts), mode='lines', line=dict(color='navy', width=2)))
+        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs, Ts), mode='lines', line=dict(color='#008b8b', width=2)))
     elif func == Bretschneider_Mitsuyasu:
-        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs, Ts), mode='lines', line=dict(color='navy', width=2)))
+        fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs, Ts), mode='lines', line=dict(color='#008b8b', width=2)))
 
-    fig.update_layout(title = title, xaxis_title='freakency',width=700, height=400, font=dict(family="Courier New, monospace",size=18,color="black"), margin=dict(t=30, b=0, l=0, r=0))
-    fig.update_xaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver', range=(0,2))
-    fig.update_yaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver')
+    fig.update_layout({"plot_bgcolor": "#e6e6e6"},title = dict(x=0.5, xref='paper', xanchor='center'), xaxis_title='freakency [rad/s]', yaxis_title='energy density [m²sec]',width=700, height=500, font=dict(family="serif",size=18,color="white"), margin=dict(t=60, b=0, l=0, r=0))
+    fig.update_xaxes(zeroline=True, zerolinewidth=1.5, zerolinecolor='black', gridcolor='gray', range=(0,2))
+    fig.update_yaxes(zeroline=True, zerolinewidth=1.5, zerolinecolor='black', gridcolor='gray')
 
     return fig
 
-def plot_function_derivative(func, title):
+def plot_function_derivative(func):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=omega, y=derivative(func, omega), mode='lines', line=dict(color='navy', width=2)))
-    fig.update_layout(title = title, xaxis_title='Z', width=700, height=400,font=dict(family="Courier New, monospace",size=18,color="black"), margin=dict(t=30, b=0, l=0, r=0))
+    fig.update_layout(xaxis_title='Z', width=700, height=400,font=dict(family="Courier New, monospace",size=18,color="black"), margin=dict(t=30, b=0, l=0, r=0))
     fig.update_xaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver')
     fig.update_yaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver')
     return fig
