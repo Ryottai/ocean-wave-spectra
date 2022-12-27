@@ -11,14 +11,20 @@ omega = np.linspace(0,20,4000)
 
 st.title('Ocean Wave Spectra')
 
-spectrum = st.sidebar.selectbox('Choose a spectrum', ['None', 'P-M (Pierson-Moskowitz)', 'ISSC', 'ITTC', 'JONSWAP(by wind)', 'JONSWAP(by wave)', 'Bretschneider-Mitsuyasu', 'Ochi-Hubble'])
+spectrum_list = ['None', 'P-M (Pierson-Moskowitz)', 'ISSC', 'ITTC', 'JONSWAP(by wind)', 'JONSWAP(by wave)', 'Bretschneider-Mitsuyasu', 'Ochi-Hubble']
+
+st.sidebar.markdown("## Compare")
+spectrum_multi = st.sidebar.radio('Choose spectra', spectrum_list)
+
+st.sidebar.markdown("## Details")
+spectrum = st.sidebar.selectbox('Choose a spectrum', spectrum_list)
 
 # None
 if spectrum == 'None':
     st.subheader('**This app is still incomplete.**')
     st.write('If we look out to sea, we notice that waves on the sea surface are not simple sinusoids. The surface appears to be composed of random waves of various lengths and periods. How can we describe this surface? The simple answer is, Not very easily. We can however, with some simplifications, come close to describing the surface. The simplifications lead to the concept of the spectrum of ocean waves. The spectrum gives the distribution of wave energy among different wave frequencies of wave-lengths on the sea surface.')
     st.caption('by wikiwaves')
-
+    st.multiselect('Correlation Matrix', spectrum_list)
 ## PM
 if spectrum == 'P-M (Pierson-Moskowitz)':
     st.header('P-M (Pierson-Moskowitz) Spectrum')

@@ -1,1 +1,1 @@
-# ocean_wave_spectra
+# Ocean Wave Spectra
