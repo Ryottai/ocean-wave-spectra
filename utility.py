@@ -42,22 +42,28 @@ def plot_function(func, Hv=None, Tv=None, Hs=None, Ts=None, U=None, X=None):
     fig = go.Figure()
     if func == PM:
         fig.add_trace(go.Scatter(x=omega, y=func(omega), mode='lines', line=dict(color='#008b8b', width=2)))
+        max_S = np.max(func(omega)[1:])
     elif func == ISSC:
         fig.add_trace(go.Scatter(x=omega, y=func(omega, Hv, Tv), mode='lines', line=dict(color='#008b8b', width=2)))
+        max_S = np.max(func(omega, Hv, Tv)[1:])
     elif func == ITTC:
         fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs), mode='lines', line=dict(color='#008b8b', width=2)))
+        max_S = np.max(func(omega, Hs)[1:])
     elif func == JONSWAP_wind:
         fig.add_trace(go.Scatter(x=omega, y=func(omega, U, X), mode='lines', line=dict(color='#008b8b', width=2)))
+        max_S = np.max(func(omega, U, X)[1:])
     elif func == JONSWAP_wave:
         fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs, Ts), mode='lines', line=dict(color='#008b8b', width=2)))
+        max_S = np.max(func(omega, Hs, Ts)[1:])
     elif func == Bretschneider_Mitsuyasu:
         fig.add_trace(go.Scatter(x=omega, y=func(omega, Hs, Ts), mode='lines', line=dict(color='#008b8b', width=2)))
+        max_S = np.max(func(omega, Hs, Ts)[1:])
 
     fig.update_layout({"plot_bgcolor": "#e6e6e6"},title = dict(x=0.5, xref='paper', xanchor='center'), xaxis_title='freakency [rad/s]', yaxis_title='energy density [m²sec]',width=700, height=500, font=dict(family="serif",size=18,color="white"), margin=dict(t=60, b=0, l=0, r=0))
     fig.update_xaxes(zeroline=True, zerolinewidth=1.5, zerolinecolor='black', gridcolor='gray', range=(0,2))
     fig.update_yaxes(zeroline=True, zerolinewidth=1.5, zerolinecolor='black', gridcolor='gray')
 
-    return fig
+    return fig,max_S
 
 def plot_function_derivative(func):
     fig = go.Figure()
