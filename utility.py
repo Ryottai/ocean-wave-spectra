@@ -72,3 +72,15 @@ def plot_function_derivative(func):
     fig.update_xaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver')
     fig.update_yaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver')
     return fig
+
+def integral(func, xmin, xmax, h):
+    result = 0
+    for x in np.arange(xmin, xmax, h):
+        result += (func(x) + func(x+h)) * h / 2
+    return result
+
+def integral_1d_momentum(func, xmin, xmax, h):
+    result = 0
+    for x in np.arange(xmin, xmax, h):
+        result += (func(x)*x + func(x+h)*x) * h / 2
+    return result

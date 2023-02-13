@@ -1,14 +1,17 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
+import random
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 #import time
 #from PIL import Image
 
-from utility import derivative, PM, ISSC, ITTC, JONSWAP_wind, JONSWAP_wave, Bretschneider_Mitsuyasu, plot_function, plot_function_derivative
+from utility import derivative, PM, ISSC, ITTC, JONSWAP_wind, JONSWAP_wave, Bretschneider_Mitsuyasu, plot_function, plot_function_derivative, integral
 
 ########################################
 # Settings
-#image = Image.open('スライム.jpg')
 st.set_page_config(
     page_title="Ocean Wave Spectra", 
     #page_icon=image, 
@@ -27,7 +30,8 @@ st.set_page_config(
 
 ########################################
 # Utility Code
-omega = np.linspace(0,20,4000)
+omega = np.linspace(0,4,10000)
+time = np.linspace(0,100,10000)
 ########################################
 
 title_top = '<h1 style="color:#008b8b">Ocean Wave Spectra</h1>'
@@ -37,7 +41,7 @@ st.markdown("---")
 spectrum_list = ['None', 'P-M (Pierson-Moskowitz)', 'ISSC', 'ITTC', 'JONSWAP (by wind)', 'JONSWAP (by wave)', 'Bretschneider-Mitsuyasu', 'Ochi-Hubble']
 
 st.sidebar.markdown("## Main Menu")
-st.sidebar.selectbox('select page:',['Home Page'])
+st.sidebar.selectbox('select page:',['Top Page'])
 
 st.sidebar.markdown("---")
 
@@ -48,8 +52,8 @@ spectrum = st.sidebar.radio('Choose a spectrum:', spectrum_list)
 if spectrum == 'None':
     st.header('Introduction')
     st.info('**This app is still incomplete.**')
-    st.write('If we look out to sea, we notice that waves on the sea surface are not simple sinusoids. The surface appears to be composed of random waves of various lengths and periods. How can we describe this surface? The simple answer is, Not very easily. We can however, with some simplifications, come close to describing the surface. The simplifications lead to the concept of the spectrum of ocean waves. The spectrum gives the distribution of wave energy among different wave frequencies of wave-lengths on the sea surface.')
-    st.caption('by wikiwaves')
+    #st.write('If we look out to sea, we notice that waves on the sea surface are not simple sinusoids. The surface appears to be composed of random waves of various lengths and periods. How can we describe this surface? The simple answer is, Not very easily. We can however, with some simplifications, come close to describing the surface. The simplifications lead to the concept of the spectrum of ocean waves. The spectrum gives the distribution of wave energy among different wave frequencies of wave-lengths on the sea surface.')
+    #st.caption('by wikiwaves')
     #st.multiselect('Comparison', spectrum_list)
 
 ## PM
@@ -61,9 +65,51 @@ if spectrum == 'P-M (Pierson-Moskowitz)':
     st.latex(r'''\alpha=8.10\times10^{-3}, \beta=0.74''')
 
     st.subheader('Plot')
+    data = {
+        'ω': omega,
+        'PM': PM(omega),
+    }
+    df = pd.DataFrame(data)
+    df = df.set_index('ω', drop=True)
+    st.line_chart(df)
     PM_fig, max_S  = plot_function(PM)
-    st.plotly_chart(PM_fig)
+    #st.plotly_chart(PM_fig)
     st.write(max_S)
+    #st.dataframe(df)
+    #st.write(random.uniform(0, 1))
+    wave = {
+        'ω': omega,
+        'PM': PM(omega),
+    }
+    xmin = 0.01
+    height_list = []
+    omega_list = []
+    for _ in range(10):
+        if xmin <= 3.5:
+            domega = random.uniform(0,0.5)
+            height2 = integral(PM, xmin, xmin+domega, h=0.0001)
+            height = np.sqrt(height2)
+            omega = xmin+domega/2
+            #T = 2*np.pi/omega
+            xmin += domega
+            height_list.append(height)
+            omega_list.append(omega)
+        else:
+            pass
+    #st.write(height_list)
+    #st.write(omega_list)
+    wave = {'t': time}
+    for i in range(len(height_list)):
+        wave['wave{}'.format(i)] = height_list[i] * np.sin(omega_list[i]*time)
+    df_wave = pd.DataFrame(wave)
+    df_wave = df_wave.set_index('t', drop=True)
+    #st.dataframe(df_wave)
+    st.write('elemental wave')
+    st.line_chart(df_wave, height=300)
+    st.write('synthetic wave')
+    df_wave['wave'] = df_wave.sum(axis=1)
+    st.line_chart(df_wave['wave'], height=300)
+
 
 ## ISSC
 if spectrum == 'ISSC':
