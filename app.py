@@ -21,8 +21,8 @@ st.set_page_config(
         #'Get Help': 'https://discuss.streamlit.io/',
         #'Report a bug': "https://github.com/Ryottai/ocean_wave_spectra",
         'About': """
-        # Ocean Wave Spectra
-        This app shows ocean wave spectra and waves made from each spectrum.
+        ### Ocean Wave Spectra
+        This application shows ocean wave spectra and simulates waves made from each spectrum.
         """
     })
 
