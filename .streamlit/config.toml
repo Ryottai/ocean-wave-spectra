@@ -1,6 +1,6 @@
 [theme]
-primaryColor="#008b8b" # 赤
-backgroundColor="#1a1a1a" # 黒
-secondaryBackgroundColor="#000000" # ダークグレー
-textColor="#FFFFFF" # 白
+primaryColor="#04ADE2" # 赤
+backgroundColor="#FFFFFF"# 白
+secondaryBackgroundColor="#DDDDDD" # ダークグレー
+textColor="#111111" # ダークグレー
 font="sans serif"

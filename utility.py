@@ -73,12 +73,30 @@ def plot_function_derivative(func):
     fig.update_yaxes(zeroline=True, zerolinewidth=2, zerolinecolor='gray', gridcolor='silver')
     return fig
 
-def integral(func, xmin, xmax, h):
+def integral(func, xmin, xmax, h, Hv=None, Tv=None, Hs=None, Ts=None, U=None, X=None):
     result = 0
-    for x in np.arange(xmin, xmax, h):
-        result += (func(x) + func(x+h)) * h / 2
+    if func == PM:
+        for x in np.arange(xmin, xmax, h):
+            result += (func(x) + func(x+h)) * h / 2
+    elif func == ISSC:
+        for x in np.arange(xmin, xmax, h):
+            result += (func(x, Hv, Tv) + func(x+h, Hv, Tv)) * h / 2
+    elif func == ITTC:
+        for x in np.arange(xmin, xmax, h):
+            result += (func(x, Hs) + func(x+h, Hs)) * h / 2
+    elif func == JONSWAP_wind:
+        for x in np.arange(xmin, xmax, h):
+            result += (func(x, U, X) + func(x+h, U, X)) * h / 2
+    elif func == JONSWAP_wave:
+        for x in np.arange(xmin, xmax, h):
+            result += (func(x, Hs, Ts) + func(x+h, Hs, Ts)) * h / 2
+    elif func == Bretschneider_Mitsuyasu:
+        for x in np.arange(xmin, xmax, h):
+            result += (func(x, Hs, Ts) + func(x+h, Hs, Ts)) * h / 2
+
     return result
 
+# ステップdωの重心を求める場合
 def integral_1d_momentum(func, xmin, xmax, h):
     result = 0
     for x in np.arange(xmin, xmax, h):
